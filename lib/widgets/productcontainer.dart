@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/global.dart';
+import 'package:food_delivery/models/product.dart';
 import 'package:food_delivery/screens/details.dart';
 
 class ProductContainer extends StatelessWidget {
-  final int id;
-
-  void onDrag(DragEndDetails) {}
-
-  const ProductContainer({var key, this.id: 0}) : super(key: key);
+  ProductContainer(this.product, Key key) : super(key: key);
+  final Product product;
   //
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => DetailsScreen(id: id)),
+        MaterialPageRoute(
+            builder: (context) =>
+                DetailsScreen(product, ObjectKey(product.id))),
       ),
-      onHorizontalDragEnd: onDrag,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -28,12 +26,12 @@ class ProductContainer extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("\$ ${productsList[id].price}",
-                  style: Theme.of(context).textTheme.headline6
-                  // .copyWith(
-                  //       color: Colors.black87,
-                  //     ),
-                  ),
+              child: Text(
+                "\$ ${product.price}",
+                style: Theme.of(context).textTheme.headline6?.copyWith(
+                      color: Colors.black87,
+                    ),
+              ),
             ),
             SizedBox(
               height: 15.0,
@@ -42,9 +40,9 @@ class ProductContainer extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Hero(
-                  tag: '$id',
+                  tag: '${product.id}',
                   child: Image.asset(
-                    "${productsList[id].img}",
+                    "${product.img}",
                     fit: BoxFit.cover,
                     // width: double.infinity,
                   ),
@@ -64,7 +62,7 @@ class ProductContainer extends StatelessWidget {
                     Radius.circular(9.0),
                   ),
                 ),
-                child: Text("${productsList[id].title}",
+                child: Text("${product.title}",
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2

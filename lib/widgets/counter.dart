@@ -45,6 +45,18 @@ class _CounterState extends State<Counter> {
             child: Icon(Icons.remove),
           ),
         ),
+        Container(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: ElevatedButton(
+            child: Text(
+              "Add To Cart",
+              style: Theme.of(context).textTheme.button?.apply(
+                    color: Colors.white,
+                  ),
+            ),
+            onPressed: () {},
+          ),
+        )
       ],
     );
   }

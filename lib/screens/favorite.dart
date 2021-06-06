@@ -33,7 +33,7 @@ class FavoriteScreen extends StatelessWidget {
                   childAspectRatio: .7),
               itemCount: productsList.length,
               itemBuilder: (BuildContext context, int index) {
-                return ProductContainer(id: index);
+                return ProductContainer(productsList[index], ObjectKey(index));
               },
             )
           ],

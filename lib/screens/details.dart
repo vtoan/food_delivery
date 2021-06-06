@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/global.dart';
+import 'package:food_delivery/models/product.dart';
 import 'package:food_delivery/widgets/counter.dart';
 
 class DetailsScreen extends StatelessWidget {
-  final int id;
-  const DetailsScreen({var key, this.id: 0}) : super(key: key);
+  const DetailsScreen(this.product, Key key) : super(key: key);
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +43,9 @@ class DetailsScreen extends StatelessWidget {
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: Hero(
-                        tag: '$id',
+                        tag: '${product.id}',
                         child: Image.asset(
-                          "${productsList[id].img}",
+                          "${product.img}",
                           width: MediaQuery.of(context).size.width * .7,
                         ),
                       ),
@@ -72,7 +72,7 @@ class DetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "${productsList[id].title}",
+                          "${product.title}",
                           style: Theme.of(context).textTheme.headline4,
                         ),
                         IconButton(
@@ -89,32 +89,18 @@ class DetailsScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     Text(
-                      "${productsList[id].description}",
+                      "${product.description}",
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Counter(),
                         Text(
-                          "${productsList[id].price}",
+                          "\$ ${product.price}",
                           style: Theme.of(context).textTheme.headline6,
                         ),
+                        Counter(),
                       ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 15.0),
-                      height: 60,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        child: Text(
-                          "Add To Cart",
-                          style: Theme.of(context).textTheme.button?.apply(
-                                color: Colors.white,
-                              ),
-                        ),
-                        onPressed: () {},
-                      ),
-                    )
                   ],
                 ),
               ),
