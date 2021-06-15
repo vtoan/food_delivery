@@ -1,10 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/models/product.dart';
+import 'package:food_delivery/repositories/favoriteRepo.dart';
 import 'package:food_delivery/widgets/counter.dart';
 
-class DetailsScreen extends StatelessWidget {
-  const DetailsScreen(this.product, Key key) : super(key: key);
+class DetailsScreen extends StatefulWidget {
   final Product product;
+  const DetailsScreen(this.product, Key key) : super(key: key);
+  @override
+  _DetailsScreen createState() => _DetailsScreen(product);
+}
+
+class _DetailsScreen extends State<DetailsScreen> {
+  final Product product;
+  bool _isFavorite = false;
+
+  _DetailsScreen(this.product);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FavoriteRepo.checkFavorite(product.id).then((value) => setState(() {
+          _isFavorite = value;
+        }));
+  }
+
+  void onFavorite() {
+    FavoriteRepo.setFavorite(product.id).then((value) => setState(() {
+          _isFavorite = !_isFavorite;
+        }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +59,7 @@ class DetailsScreen extends StatelessWidget {
                               Icons.shopping_basket,
                             ),
                             onPressed: () =>
-                                Navigator.pushNamed(context, 'orderscreen')),
+                                Navigator.pushNamed(context, 'order')),
                       ],
                     ),
                   ),
@@ -77,10 +102,12 @@ class DetailsScreen extends StatelessWidget {
                         ),
                         IconButton(
                           icon: Icon(
-                            Icons.favorite_border,
+                            _isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
                             color: Colors.red,
                           ),
-                          onPressed: () {},
+                          onPressed: () => onFavorite(),
                         ),
                       ],
                     ),
@@ -98,7 +125,7 @@ class DetailsScreen extends StatelessWidget {
                           "\$ ${product.price}",
                           style: Theme.of(context).textTheme.headline6,
                         ),
-                        Counter(),
+                        Counter(product: product),
                       ],
                     ),
                   ],

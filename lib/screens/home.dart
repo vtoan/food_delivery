@@ -49,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black54),
         backgroundColor: Color(0xfff9f9f9),
+        backwardsCompatibility: false,
         elevation: 0.0,
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.shopping_basket),
-            onPressed: () => Navigator.pushNamed(context, 'orderscreen'),
+            onPressed: () => Navigator.pushNamed(context, 'order'),
           ),
         ],
       ),
